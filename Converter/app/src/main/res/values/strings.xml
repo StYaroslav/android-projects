@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Converter</string>
+
+    <string-array name="categories">
+        <item>Distance</item>
+        <item>Weight</item>
+        <item>Currency</item>
+    </string-array>
+
+    <string-array name="distanceUnits">
+        <item>Kilometers</item>
+        <item>Miles</item>
+        <item>Meters</item>
+        <item>Centimeters</item>
+    </string-array>
+
+    <string-array name="weightUnits">
+        <item>Kilograms</item>
+        <item>Tons</item>
+        <item>Grams</item>
+        <item>Pounds</item>
+    </string-array>
+
+    <string-array name="currencyUnits">
+        <item>Dollars</item>
+        <item>Rubles</item>
+        <item>Euros</item>
+        <item>Bel. rubles</item>
+    </string-array>
+</resources>
