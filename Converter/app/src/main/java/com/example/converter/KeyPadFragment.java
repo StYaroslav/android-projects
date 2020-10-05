@@ -55,49 +55,49 @@ public class KeyPadFragment extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        int buttonIndex = translateIdToIndex(view.getId());
+        String buttonIndex = translateIdToIndex(view.getId());
         viewModel.setNumber(buttonIndex);
     }
 
 
-    int translateIdToIndex(int id) {
-        int index = -1;
+    String translateIdToIndex(int id) {
+        String index = "";
         switch (id) {
             case R.id.button1:
-                index = 1;
+                index = "1";
                 break;
             case R.id.button2:
-                index = 2;
+                index = "2";
                 break;
             case R.id.button3:
-                index = 3;
+                index = "3";
                 break;
             case R.id.button4:
-                index = 4;
+                index = "4";
                 break;
             case R.id.button5:
-                index = 5;
+                index = "5";
                 break;
             case R.id.button6:
-                index = 6;
+                index = "6";
                 break;
             case R.id.button7:
-                index = 7;
+                index = "7";
                 break;
             case R.id.button8:
-                index = 8;
+                index = "8";
                 break;
             case R.id.button9:
-                index = 9;
+                index = "9";
                 break;
             case R.id.button10:
-                index = 10;
+                index = "10";
                 break;
             case R.id.button11:
-                index = 11;
+                index = "11";
                 break;
             case R.id.button12:
-                index = 12;
+                index = "12";
                 break;
         }
         return index;

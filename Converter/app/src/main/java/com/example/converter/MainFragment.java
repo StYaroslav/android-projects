@@ -1,9 +1,11 @@
 package com.example.converter;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
@@ -33,6 +35,7 @@ public class MainFragment extends Fragment {
     private String selectedCategory;
     private String selectedInitialUnit;
     private String selectedConvertedUnit;
+    private String initialValue;
 
     public MainFragment() {
         // Required empty public constructor
@@ -80,58 +83,53 @@ public class MainFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity()))
                 .get(SharedViewModel.class);
-        viewModel.getNumber().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+        viewModel.getNumber().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
-            public void onChanged(Integer number) {
+            public void onChanged(String number) {
+                initialValue = number;
                 setNumber(number);
+            }
+        });
+
+        viewModel.getCategory().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                selectedCategory = s;
+            }
+        });
+
+        viewModel.getInitialUnit().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                selectedInitialUnit = s;
+            }
+        });
+
+        viewModel.getConvertToUnit().observe(getViewLifecycleOwner(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                selectedConvertedUnit = s;
             }
         });
     }
 
-    public void setCategory(String category) {
-        selectedCategory = category;
-    }
-
-    public void setNumber(Integer buttonIndex) {
-        if (buttonIndex <= 9) {
-            textField1.append(String.valueOf(buttonIndex));
-        } else if (buttonIndex == 10) {
-            textField1.append("0");
-        } else if (buttonIndex == 11) {
-            textField1.append(".");
-        } else if (buttonIndex == 12) {
-            if (textField1.getText().length() != 0) {
-                if (textField1.getText().length() == 1) {
-                    textField1.setText("");
-                    textField2.setText("");
-                } else {
-                    String text = textField1.getText().toString();
-                    textField1.setText(text.substring(0, text.length() - 1));
-                }
-            }
-        }
-
-        convertUnitsForCategory(spinnerCategories.getSelectedItem().toString());
-
+    public void setNumber(String number) {
+        textField1.setText(number);
+        convertUnitsForCategory(selectedCategory);
     }
 
     public void convertUnitsForCategory(String category) {
-        String text = textField1.getText().toString();
-        if (!text.equals("")) {
+        if (!initialValue.equals("")) {
             switch (category) {
                 case "Distance":
                     DistanceConverter distanceConverter = new DistanceConverter();
-                    DConverter converter = new DConverter(spinnerInitialUnits
-                            .getSelectedItem().toString(), spinnerConvertToUnits.getSelectedItem()
-                            .toString());
-                    distanceConverter.Convert(converter, text, textField2);
+                    DConverter converter = new DConverter(selectedInitialUnit, selectedConvertedUnit);
+                    distanceConverter.Convert(converter, initialValue, textField2);
                     break;
                 case "Weight":
                     WeightConverter weightConverter = new WeightConverter();
-                    WConverter wConverter = new WConverter(spinnerInitialUnits
-                            .getSelectedItem().toString(), spinnerConvertToUnits.getSelectedItem()
-                            .toString());
-                    weightConverter.Convert(wConverter, text, textField2);
+                    WConverter wConverter = new WConverter(selectedInitialUnit, selectedConvertedUnit);
+                    weightConverter.Convert(wConverter, initialValue, textField2);
                 case "Currency":
                     break;
             }
@@ -143,7 +141,10 @@ public class MainFragment extends Fragment {
         spinnerConvertToUnits.setAdapter(units);
 
         spinnerInitialUnits.setSelection(0, false);
-        spinnerConvertToUnits.setSelection(0, false);
+        spinnerConvertToUnits.setSelection(1, false);
+
+        viewModel.setInitialUnit(spinnerInitialUnits.getSelectedItem().toString());
+        viewModel.setConvertToUnit(spinnerConvertToUnits.getSelectedItem().toString());
 
         spinnerInitialUnits.setOnItemSelectedListener(unitsListener);
         spinnerConvertToUnits.setOnItemSelectedListener(unitsListener);
@@ -153,6 +154,14 @@ public class MainFragment extends Fragment {
 
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            switch (view.getId()) {
+                case R.id.spinnerInitialUnits:
+                    viewModel.setInitialUnit(adapterView.getSelectedItem().toString());
+                    break;
+                case R.id.spinnerConvertedUnits:
+                    viewModel.setConvertToUnit(adapterView.getSelectedItem().toString());
+                    break;
+            }
             convertUnitsForCategory(selectedCategory);
         }
 
@@ -166,6 +175,7 @@ public class MainFragment extends Fragment {
         @Override
         public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             selectedCategory = adapterView.getItemAtPosition(i).toString();
+            viewModel.setCategory(selectedCategory);
             switch (selectedCategory) {
                 case "Distance":
                     addUnits(distanceUnitsArray, adapterView);
@@ -174,10 +184,10 @@ public class MainFragment extends Fragment {
                     addUnits(weightUnitsArray, adapterView);
                     break;
                 case "Currency":
-                    ArrayAdapter<CharSequence> currencyUnits = ArrayAdapter.createFromResource(
+                    /*ArrayAdapter<CharSequence> currencyUnits = ArrayAdapter.createFromResource(
                             adapterView.getContext(),
                             R.array.currencyUnits, android.R.layout.simple_spinner_item);
-                    addUnits(currencyUnits, adapterView);
+                    addUnits(currencyUnits, adapterView);*/
                     break;
             }
         }
