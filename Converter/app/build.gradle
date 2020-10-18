@@ -1,5 +1,37 @@
 apply plugin: 'com.android.application'
 
+def getPatch() {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe'
+        standardOutput = stdout
+    }
+    def result = stdout.toString()
+    if (result.contains("-")) {
+        return result.split("-")[1]
+    } else {
+        return '0'
+    }
+}
+
+def getTag() {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe'
+        standardOutput = stdout
+    }
+    def result = stdout.toString()
+    if (result.contains("-")) {
+        return result.split("-").first()
+    } else {
+        return '1.0'
+    }
+}
+
+def patch = getPatch()
+def tag = getTag()
+def code = getPatch().toInteger()
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -8,8 +40,8 @@ android {
         applicationId "com.example.converter"
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        versionCode code
+        versionName "$tag.$patch"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

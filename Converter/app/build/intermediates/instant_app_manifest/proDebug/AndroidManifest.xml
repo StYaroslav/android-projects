@@ -3,7 +3,7 @@
     package="com.example.converter.pro"
     android:targetSandboxVersion="2"
     android:versionCode="1"
-    android:versionName="1.0-pro" >
+    android:versionName="v1.3.1-pro" >
 
     <uses-sdk
         android:minSdkVersion="19"
