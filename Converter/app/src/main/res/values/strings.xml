@@ -1,10 +1,9 @@
 <resources>
-    <string name="app_name">Converter</string>
 
     <string-array name="categories">
         <item>Distance</item>
         <item>Weight</item>
-        <item>Currency</item>
+        <item>Data</item>
     </string-array>
 
     <string-array name="distanceUnits">
@@ -21,10 +20,14 @@
         <item>Pounds</item>
     </string-array>
 
-    <string-array name="currencyUnits">
-        <item>Dollars</item>
-        <item>Rubles</item>
-        <item>Euros</item>
-        <item>Bel. rubles</item>
+    <string-array name="dataUnits">
+        <item>Bit</item>
+        <item>KBit</item>
+        <item>MGBit</item>
+        <item>GBit</item>
+        <item>Bite</item>
+        <item>KBite</item>
+        <item>MGBite</item>
+        <item>GBite</item>
     </string-array>
 </resources>

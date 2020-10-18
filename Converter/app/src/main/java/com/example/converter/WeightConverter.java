@@ -30,9 +30,9 @@ public class WeightConverter {
         put(new WConverter("Pounds", "Grams"), 453592.0);
     }};
 
-    public void Convert(WConverter converter, String amount, TextView textField) {
+    public String Convert(WConverter converter, String amount) {
         Double rate = converterMap.get(converter);
-        textField.setText(String.valueOf(Double.parseDouble(amount) * rate));
+        return String.valueOf(Double.parseDouble(amount) * rate);
     }
 }
 

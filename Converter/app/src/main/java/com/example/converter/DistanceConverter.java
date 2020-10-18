@@ -31,9 +31,9 @@ public class DistanceConverter {
         put(new DConverter("Centimeters", "Meters"), 0.01);
     }};
 
-    public void Convert(DConverter converter, String amount, TextView textField) {
+    public String Convert(DConverter converter, String amount) {
         Double rate = converterMap.get(converter);
-        textField.setText(String.valueOf(Double.parseDouble(amount) * rate));
+        return String.valueOf(Double.parseDouble(amount) * rate);
     }
 }
 
