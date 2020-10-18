@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "applicationId": "com.example.converter.pro",
+  "variantType": "BASE_APK",
+  "elements": [
+    {
+      "outputType": {
+        "type": "METADATA_FEATURE_MANIFEST"
+      },
+      "apkData": {
+        "type": "MAIN",
+        "splits": [],
+        "versionCode": 1,
+        "versionName": "1.0-pro",
+        "outputFile": "app-pro-debug.apk",
+        "fullName": "proDebug",
+        "baseName": "pro-debug",
+        "dirName": ""
+      },
+      "path": "AndroidManifest.xml",
+      "properties": {}
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragmentMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainFragment">
+
+    <Spinner
+        android:id="@+id/spinnerConvertedUnits"
+        android:layout_width="142dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="60dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextField1" />
+
+    <ImageView
+        android:id="@+id/copyConvertedValue"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="120dp"
+        android:background="@color/icons_color"
+        android:onClick="copyConvertedValue"
+        android:src="@android:drawable/ic_menu_save"
+        app:layout_constraintStart_toEndOf="@+id/TextField2"
+        app:layout_constraintTop_toBottomOf="@+id/copyInitValue" />
+
+    <EditText
+        android:id="@+id/TextField1"
+        android:layout_width="308dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="12dp"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="false"
+        android:singleLine="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerInitialUnits" />
+
+    <EditText
+        android:id="@+id/TextField2"
+        android:layout_width="312dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="12dp"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:ems="10"
+        android:focusable="false"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerConvertedUnits" />
+
+    <ImageView
+        android:id="@+id/switchButton"
+        android:layout_width="49dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="40dp"
+        android:background="@color/icons_color"
+        android:scaleType="center"
+        android:onClick="switchButtonOnClick"
+        android:src="@android:drawable/ic_popup_sync"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerConvertedUnits"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextField1"
+        app:layout_constraintVertical_bias="0.444" />
+
+    <Spinner
+        android:id="@+id/spinnerInitialUnits"
+        android:layout_width="142dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="56dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCategories" />
+
+    <ImageView
+        android:id="@+id/copyInitValue"
+        android:layout_width="33dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="104dp"
+        android:background="@color/icons_color"
+        android:onClick="copyInitValue"
+        android:src="@android:drawable/ic_menu_save"
+        app:layout_constraintStart_toEndOf="@+id/TextField1"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCategories" />
+
+    <Spinner
+        android:id="@+id/spinnerCategories"
+        android:layout_width="148dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
