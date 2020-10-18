@@ -28,9 +28,24 @@ def getTag() {
     }
 }
 
+def getCode() {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe'
+        standardOutput = stdout
+    }
+    def result = stdout.toString()
+    if (result.contains("-")) {
+        return result.split("-")[0].toString()[1].toInteger()
+    }
+    else {
+        return 1
+    }
+}
+
 def patch = getPatch()
 def tag = getTag()
-def code = getPatch().toInteger()
+def code = getCode()
 
 android {
     compileSdkVersion 30
