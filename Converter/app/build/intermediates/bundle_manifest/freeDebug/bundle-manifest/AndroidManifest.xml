@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.converter.free"
-    android:versionCode="1"
-    android:versionName="v1.3.4-free" >
+    android:versionCode="2"
+    android:versionName="v1.3.5-free" >
 
     <uses-sdk
         android:minSdkVersion="19"

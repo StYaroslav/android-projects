@@ -35,7 +35,7 @@ def getCode() {
         standardOutput = stdout
     }
     def result = stdout.toString()
-    if (result.contains("-")) {
+    if (result.contains("\n")) {
         return result.split("\n").length
     }
     else {

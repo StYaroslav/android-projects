@@ -11,8 +11,8 @@
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 1,
-      "versionName": "v1.3.4-pro",
+      "versionCode": 2,
+      "versionName": "v1.3.5-pro",
       "enabled": true,
       "outputFile": "app-pro-debug.apk"
     }

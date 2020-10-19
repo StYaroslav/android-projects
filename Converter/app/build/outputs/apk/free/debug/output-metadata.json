@@ -11,8 +11,8 @@
       "type": "SINGLE",
       "filters": [],
       "properties": [],
-      "versionCode": 1,
-      "versionName": "v1.3.4-free",
+      "versionCode": 2,
+      "versionName": "v1.3.5-free",
       "enabled": true,
       "outputFile": "app-free-debug.apk"
     }

@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.converter.pro"
     android:targetSandboxVersion="2"
-    android:versionCode="1"
-    android:versionName="v1.3.4-pro" >
+    android:versionCode="2"
+    android:versionName="v1.3.5-pro" >
 
     <uses-sdk
         android:minSdkVersion="19"
