@@ -1,4 +1,0 @@
-#Wed Oct 07 20:33:13 MSK 2020
-base.0=C\:\\Users\\yaros\\android-projects\\Converter\\app\\build\\intermediates\\dex\\freeRelease\\mergeDexFreeRelease\\classes.dex
-path.0=classes.dex
-renamed.0=classes.dex

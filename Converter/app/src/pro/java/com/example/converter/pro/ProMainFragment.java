@@ -1,5 +1,6 @@
 package com.example.converter.pro;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.converter.MainFragment;
@@ -23,6 +26,10 @@ import static androidx.core.content.ContextCompat.getSystemService;
 
 public class ProMainFragment extends MainFragment {
 
+    private ImageView switchButton;
+    private ImageView copyInitValue;
+    private ImageView copyConvertedValue;
+
     public ProMainFragment() {
         // Required empty public constructor
     }
@@ -34,6 +41,7 @@ public class ProMainFragment extends MainFragment {
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -41,13 +49,14 @@ public class ProMainFragment extends MainFragment {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
 
         assert rootView != null;
-        Button switchButton = rootView.findViewById(R.id.switchButton);
-        Button copyInitValue = rootView.findViewById(R.id.copyInitValue);
-        Button copyConvertedValue = rootView.findViewById(R.id.copyConvertedValue);
+        switchButton = rootView.findViewById(R.id.switchButton);
+        copyInitValue = rootView.findViewById(R.id.copyInitValue);
+        copyConvertedValue = rootView.findViewById(R.id.copyConvertedValue);
 
         switchButton.setOnClickListener(switchButtonListener);
         copyInitValue.setOnClickListener(copyInitValueButtonListener);
         copyConvertedValue.setOnClickListener(copyConvertedValueButtonListener);
+
 
         return rootView;
     }

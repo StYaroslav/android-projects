@@ -17,11 +17,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Objects;
 
-import static androidx.core.content.ContextCompat.getSystemService;
 
 public class MainFragment extends Fragment {
 

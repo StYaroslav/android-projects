@@ -1775,8 +1775,6 @@ id fixed
 id flip
 id floating
 id forever
-id fragment2
-id fragment3
 id fragmentMainPro
 id fragmentNumPad
 id fragment_container_view_tag

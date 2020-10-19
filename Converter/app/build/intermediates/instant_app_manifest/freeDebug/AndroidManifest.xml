@@ -3,7 +3,7 @@
     package="com.example.converter.free"
     android:targetSandboxVersion="2"
     android:versionCode="2"
-    android:versionName="v1.3.6-free" >
+    android:versionName="v1.3.7-free" >
 
     <uses-sdk
         android:minSdkVersion="19"
