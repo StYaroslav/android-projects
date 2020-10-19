@@ -1,4 +1,4 @@
-#Mon Oct 19 00:34:28 MSK 2020
-base.0=C\:\\Users\\yaros\\android-projects\\Converter\\app\\build\\intermediates\\dex\\proDebug\\mergeDexProDebug\\classes.dex
+#Mon Oct 19 15:05:42 MSK 2020
+base.0=C\:\\Users\\OLEG\\Desktop\\Android\\android-projects\\Converter\\app\\build\\intermediates\\dex\\proDebug\\mergeDexProDebug\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

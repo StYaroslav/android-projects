@@ -9,5 +9,5 @@ public final class BuildConfig {
   public static final String BUILD_TYPE = "debug";
   public static final String FLAVOR = "free";
   public static final int VERSION_CODE = 1;
-  public static final String VERSION_NAME = "v1.3.1-free";
+  public static final String VERSION_NAME = "v1.3.4-free";
 }

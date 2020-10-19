@@ -31,12 +31,12 @@ def getTag() {
 def getCode() {
     def stdout = new ByteArrayOutputStream()
     exec {
-        commandLine 'git', 'describe'
+        commandLine 'git', 'tag'
         standardOutput = stdout
     }
     def result = stdout.toString()
     if (result.contains("-")) {
-        return result.split("-")[0].toString()[1].toInteger()
+        return result.split("\n").length
     }
     else {
         return 1
