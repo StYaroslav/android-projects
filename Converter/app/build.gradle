@@ -71,6 +71,7 @@ android {
 
     flavorDimensions "converter"
     productFlavors {
+
         free {
             resValue "string", "app_name", "Converter"
             dimension "converter"
@@ -89,6 +90,10 @@ android {
         pro {
             res {
                 srcDirs 'src/pro/res', 'src/pro/res/'
+            }
+
+            java {
+                srcDirs 'src/pro/java', 'src/pro/java/'
             }
         }
         free {

@@ -42,9 +42,6 @@ public class KeyPadFragment extends Fragment implements View.OnClickListener{
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_key_pad, container, false);
 
-        // appVersion = rootView.findViewById(R.id.appVersion);
-//        appVersion.setText(BuildConfig.VERSION_CODE + " " + BuildConfig.VERSION_NAME);
-
         int[] numberButtons =  {R.id.button1, R.id.button2, R.id.button3, R.id.button4,
                 R.id.button5, R.id.button6, R.id.button7, R.id.button8, R.id.button9, R.id.button10,
                 R.id.button11, R.id.button12};
@@ -94,7 +91,7 @@ public class KeyPadFragment extends Fragment implements View.OnClickListener{
                 index = "9";
                 break;
             case R.id.button10:
-                index = "10";
+                index = "0";
                 break;
             case R.id.button11:
                 index = "11";

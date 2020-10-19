@@ -1775,7 +1775,9 @@ id fixed
 id flip
 id floating
 id forever
-id fragmentMain
+id fragment2
+id fragment3
+id fragmentMainPro
 id fragmentNumPad
 id fragment_container_view_tag
 id ghost_view
@@ -2178,6 +2180,7 @@ string error_icon_content_description
 string exposed_dropdown_menu_content_description
 string fab_transformation_scrim_behavior
 string fab_transformation_sheet_behavior
+string hello_blank_fragment
 string hide_bottom_view_on_scroll_behavior
 string icon_content_description
 string item_view_role_description

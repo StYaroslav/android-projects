@@ -1,7 +1,7 @@
 [
     {
         "merged": "C:\\Users\\OLEG\\Desktop\\Android\\android-projects\\Converter\\app\\build\\intermediates\\res\\merged\\pro\\debug\\layout_activity_main.xml.flat",
-        "source": "C:\\Users\\OLEG\\Desktop\\Android\\android-projects\\Converter\\app\\src\\main\\res\\layout\\activity_main.xml"
+        "source": "C:\\Users\\OLEG\\Desktop\\Android\\android-projects\\Converter\\app\\src\\pro\\res\\layout\\activity_main.xml"
     },
     {
         "merged": "C:\\Users\\OLEG\\Desktop\\Android\\android-projects\\Converter\\app\\build\\intermediates\\res\\merged\\pro\\debug\\drawable-hdpi_ic_launcher_background.png.flat",
@@ -45,7 +45,7 @@
     },
     {
         "merged": "C:\\Users\\OLEG\\Desktop\\Android\\android-projects\\Converter\\app\\build\\intermediates\\res\\merged\\pro\\debug\\layout-land_activity_main.xml.flat",
-        "source": "C:\\Users\\OLEG\\Desktop\\Android\\android-projects\\Converter\\app\\src\\main\\res\\layout-land\\activity_main.xml"
+        "source": "C:\\Users\\OLEG\\Desktop\\Android\\android-projects\\Converter\\app\\src\\pro\\res\\layout-land\\activity_main.xml"
     },
     {
         "merged": "C:\\Users\\OLEG\\Desktop\\Android\\android-projects\\Converter\\app\\build\\intermediates\\res\\merged\\pro\\debug\\mipmap-xxhdpi_ic_launcher_round.png.flat",

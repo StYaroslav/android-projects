@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragmentMain"
+    android:id="@+id/fragmentMainPro"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainFragment">
@@ -23,7 +23,6 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="120dp"
         android:background="@color/icons_color"
-        android:onClick="copyConvertedValue"
         android:src="@android:drawable/ic_menu_save"
         app:layout_constraintStart_toEndOf="@+id/TextField2"
         app:layout_constraintTop_toBottomOf="@+id/copyInitValue" />
@@ -65,7 +64,6 @@
         android:layout_marginStart="40dp"
         android:background="@color/icons_color"
         android:scaleType="center"
-        android:onClick="switchButtonOnClick"
         android:src="@android:drawable/ic_popup_sync"
         app:layout_constraintBottom_toTopOf="@+id/spinnerConvertedUnits"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,7 +86,6 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="104dp"
         android:background="@color/icons_color"
-        android:onClick="copyInitValue"
         android:src="@android:drawable/ic_menu_save"
         app:layout_constraintStart_toEndOf="@+id/TextField1"
         app:layout_constraintTop_toBottomOf="@+id/spinnerCategories" />

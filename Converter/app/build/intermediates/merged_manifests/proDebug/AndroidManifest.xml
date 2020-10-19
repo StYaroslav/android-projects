@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.converter.pro"
     android:versionCode="2"
-    android:versionName="v1.3.5-pro" >
+    android:versionName="v1.3.6-pro" >
 
     <uses-sdk
         android:minSdkVersion="19"

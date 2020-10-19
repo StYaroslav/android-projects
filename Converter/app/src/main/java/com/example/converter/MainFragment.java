@@ -25,19 +25,19 @@ import static androidx.core.content.ContextCompat.getSystemService;
 
 public class MainFragment extends Fragment {
 
-    private SharedViewModel viewModel;
-    private TextView textField1;
-    private TextView textField2;
+    protected SharedViewModel viewModel;
+    protected TextView textField1;
+    protected TextView textField2;
     private Spinner spinnerCategories;
-    private Spinner spinnerInitialUnits;
-    private Spinner spinnerConvertToUnits;
+    protected Spinner spinnerInitialUnits;
+    protected Spinner spinnerConvertToUnits;
     private ArrayAdapter<CharSequence> categoriesArray;
     private ArrayAdapter<CharSequence> distanceUnitsArray;
     private ArrayAdapter<CharSequence> weightUnitsArray;
     private ArrayAdapter<CharSequence> dataUnitsArray;
     private String selectedCategory;
-    private String selectedInitialUnit;
-    private String selectedConvertedUnit;
+    protected String selectedInitialUnit;
+    protected String selectedConvertedUnit;
 
     public MainFragment() {
         // Required empty public constructor
@@ -142,22 +142,6 @@ public class MainFragment extends Fragment {
         viewModel.setConvertToUnit(spinnerConvertToUnits.getSelectedItem().toString());
     }
 
-    public void copyInitValueButtonListener(View view) {
-        copy(textField1.getText().toString());
-    }
-
-    public void copyConvertedValueButtonListener(View view) {
-        copy(textField2.getText().toString());
-    }
-
-    public void copy(String text) {
-        ClipboardManager manager = getSystemService(Objects.requireNonNull(getContext())
-                , ClipboardManager.class);
-        ClipData clip = ClipData.newPlainText("text", text);
-        assert manager != null;
-        manager.setPrimaryClip(clip);
-        Toast.makeText(getContext(), "Copied", Toast.LENGTH_SHORT).show();
-    }
 
     AdapterView.OnItemSelectedListener unitsListener = new AdapterView.OnItemSelectedListener() {
         // Обработчик событий для подкатегорий
@@ -207,18 +191,4 @@ public class MainFragment extends Fragment {
 
         }
     };
-
-    public void switchButtonListener(View view) {
-        // обработчик нажатия switchButton
-
-        String temp = selectedInitialUnit;
-        viewModel.setInitialUnit(selectedConvertedUnit);
-        spinnerInitialUnits.setSelection(((ArrayAdapter<CharSequence>) spinnerInitialUnits
-                .getAdapter()).getPosition(selectedConvertedUnit));
-        spinnerConvertToUnits.setSelection(((ArrayAdapter<CharSequence>) spinnerConvertToUnits
-                .getAdapter()).getPosition(temp));
-        viewModel.setConvertToUnit(temp);
-        viewModel.setInitialNumber(textField2.getText().toString());
-        viewModel.convert();
-    }
 }
