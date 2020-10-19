@@ -47,13 +47,37 @@ public class DataConverter {
         put(new Converter("GBit", "MGBite"), 125.0);
         put(new Converter("GBit", "GBite"), 0.125);
 
-        put(new Converter("Meters", "Kilometers"), 0.001);
-        put(new Converter("Meters", "Miles"), 0.000621371);
-        put(new Converter("Meters", "Centimeters"), 100.0);
+        put(new Converter("Bite", "Bit"), 8.0);
+        put(new Converter("Bite", "KBit"), 0.008);
+        put(new Converter("Bite", "MBit"), 0.000008);
+        put(new Converter("Bite", "GBit"), 0.000000008);
+        put(new Converter("Bite", "KBite"), 0.001);
+        put(new Converter("Bite", "MBite"), 0.000001);
+        put(new Converter("Bite", "GBite"), 0.000000001);
 
-        put(new Converter("Centimeters", "Kilometers"), 0.00001);
-        put(new Converter("Centimeters", "Miles"), 0.0000062137);
-        put(new Converter("Centimeters", "Meters"), 0.01);
+        put(new Converter("KBite", "Bit"), 8000.0);
+        put(new Converter("KBite", "KBit"), 8.0);
+        put(new Converter("KBite", "MBit"), 0.008);
+        put(new Converter("KBite", "GBit"), 0.000008);
+        put(new Converter("KBite", "Bite"), 1000.0);
+        put(new Converter("KBite", "MBite"), 0.001);
+        put(new Converter("KBite", "GBite"), 0.000001);
+
+        put(new Converter("MBite", "Bit"), 800000.0);
+        put(new Converter("MBite", "KBit"), 8000.0);
+        put(new Converter("MBite", "MBit"), 8.0);
+        put(new Converter("MBite", "GBit"), 0.008);
+        put(new Converter("MBite", "Bite"), 100000.0);
+        put(new Converter("MBite", "KBite"), 1000.0);
+        put(new Converter("MBite", "GBite"), 0.001);
+
+        put(new Converter("GBite", "Bit"), 800000000.0);
+        put(new Converter("GBite", "KBit"), 800000.0);
+        put(new Converter("GBite", "MBit"), 8000.0);
+        put(new Converter("GBite", "GBit"), 8.0);
+        put(new Converter("GBite", "Bite"), 100000000.0);
+        put(new Converter("GBite", "KBite"), 100000.0);
+        put(new Converter("GBite", "MBite"), 1000.0);
     }};
 
     public String Convert(Converter converter, String amount) {
