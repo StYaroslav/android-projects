@@ -9,7 +9,7 @@
     <string name="training_name">Название</string>
     <string name="preparing_time">Время подготовки</string>
     <string name="confirm">Подтвердить</string>
-    <string name="cooldown_time">Успокоиться</string>
+    <string name="calmdown_time">Успокоиться</string>
     <string name="rest_between_sets">Отдых между циклами</string>
     <string name="sets_amount">Количество сетов</string>
     <string name="cycles_amount">Количество циклов</string>
@@ -30,7 +30,7 @@
     <string name="preparing">Подготовка</string>
     <string name="work">Работа</string>
     <string name="rest">Отдых</string>
-    <string name="cooldown">Успокоиться</string>
+    <string name="calmdown">Успокоиться</string>
     <string name="finish">Финиш</string>
     <string name="training_end">Тренировка окончена</string>
     <string name="reset_data">Очистить данные</string>

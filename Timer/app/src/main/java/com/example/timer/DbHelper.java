@@ -51,6 +51,13 @@ public class DbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public void clear() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("delete from " + TABLE_TIMERS + ";", null);
+        db.delete(TABLE_TIMERS, null, null);
+        cursor.close();
+    }
+
     public int addTimer(TimerData timer) {
         SQLiteDatabase db = this.getWritableDatabase();
         return (int)db.insert(DbHelper.TABLE_TIMERS, null, getContentValues(timer));

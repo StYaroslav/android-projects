@@ -9,8 +9,8 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="402dp"
-        android:layout_height="225dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="235dp"
+        android:layout_marginTop="6dp"
         android:layout_marginBottom="4dp"
         android:background="#FFFFFF"
         app:cardBackgroundColor="#DF5858"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
+            android:layout_width="403dp"
             android:layout_height="match_parent">
 
             <TextView
@@ -35,14 +35,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/work"
+                android:id="@+id/preparing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="24dp"
                 android:textColor="#FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/preparing" />
+                app:layout_constraintTop_toBottomOf="@+id/title" />
 
             <TextView
                 android:id="@+id/betweenSets"
@@ -63,6 +63,16 @@
                 android:textColor="#FFFFFF"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/work" />
+
+            <TextView
+                android:id="@+id/work"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="5dp"
+                android:textColor="#FFFFFF"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/preparing" />
 
             <TextView
                 android:id="@+id/cycles"
@@ -109,20 +119,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="24dp"
                 android:textColor="#FFFFFF"
-                app:layout_constraintStart_toStartOf="@+id/preparing"
+                app:layout_constraintStart_toEndOf="@+id/preparing"
                 app:layout_constraintTop_toBottomOf="@+id/titleValue" />
-
-            <TextView
-                android:id="@+id/preparing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="5dp"
-                android:textColor="#FFFFFF"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/title" />
 
             <TextView
                 android:id="@+id/restValue"
@@ -165,7 +165,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/setsValue" />
 
             <TextView
-                android:id="@+id/betweenSetsMinus"
+                android:id="@+id/betweenSetsValue"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"

@@ -25,13 +25,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     ArrayList<TimerData> timerData;
     Context context;
     String[] cardViewColors;
+    private final OnTimerEditListener mOnTimerEditListener;
     private final OnItemDeleteListener mOnDeleteListener;
 
     public RecyclerViewAdapter(Context ct, ArrayList<TimerData> data,
-                               OnItemDeleteListener mOnDeleteListener) {
+                               OnItemDeleteListener mOnDeleteListener, OnTimerEditListener mOnTimerEditListener) {
         this.context = ct;
         this.timerData = data;
         this.mOnDeleteListener = mOnDeleteListener;
+        this.mOnTimerEditListener = mOnTimerEditListener;
         this.cardViewColors = context.getResources().getStringArray(R.array.card_view_colors);
     }
 
@@ -44,15 +46,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView titleValue, workValue, preparingValue, restValue, setsValue, cyclesValue,
                 calmDownValue, betweenSetsValue;
 
+        OnTimerEditListener onTimerEditListener;
         OnItemDeleteListener onItemDeleteListener;
 
-        public ViewHolder(@NonNull final View itemView, OnItemDeleteListener mOnDeleteListener) {
+        public ViewHolder(@NonNull final View itemView, OnItemDeleteListener mOnDeleteListener,
+                          OnTimerEditListener mOnTimerEditListener) {
             super(itemView);
 
             playButton = itemView.findViewById(R.id.playButton);
             optionsButton = itemView.findViewById(R.id.optionsButton);
 
             onItemDeleteListener = mOnDeleteListener;
+            onTimerEditListener = mOnTimerEditListener;
 
             optionsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,8 +77,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                     notifyItemRangeChanged(position, getItemCount());
                                     return true;
                                 case R.id.editItem:
-                                    Toast toast1 = Toast.makeText(context, "Edit", Toast.LENGTH_SHORT);
-                                    toast1.show();
+                                    onTimerEditListener.onTimerEditClick(getAdapterPosition());
                                     return true;
                                 default:
                                     return false;
@@ -90,12 +94,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             titleValue = itemView.findViewById(R.id.titleValue);
             workValue = itemView.findViewById(R.id.workValue);
-            preparingValue = itemView.findViewById(R.id.preparing);
+            preparingValue = itemView.findViewById(R.id.preparingValue);
             restValue = itemView.findViewById(R.id.restValue);
             setsValue = itemView.findViewById(R.id.setsValue);
             cyclesValue = itemView.findViewById(R.id.cyclesValue);
             calmDownValue = itemView.findViewById(R.id.calmDownValue);
-            betweenSetsValue = itemView.findViewById(R.id.betweenSetsMinus);
+            betweenSetsValue = itemView.findViewById(R.id.betweenSetsValue);
         }
     }
 
@@ -104,7 +108,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.recycle_view_row, parent, false);
-        return new ViewHolder(view, mOnDeleteListener);
+        return new ViewHolder(view, mOnDeleteListener, mOnTimerEditListener);
     }
 
     @SuppressLint("SetTextI18n")
@@ -119,14 +123,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.cyclesValue.setText(resources.getString(R.string.cycles_amount) + ": " + timerSequence.getCyclesAmount());
         holder.setsValue.setText(resources.getString(R.string.sets_amount) + ": " + timerSequence.getSetsAmount());
         holder.betweenSetsValue.setText(resources.getString(R.string.rest_between_sets) + ": " + timerSequence.getBetweenSetsRest());
-        holder.calmDownValue.setText(resources.getString(R.string.cooldown_time) + ": " + timerSequence.getCalmDown());
+        holder.calmDownValue.setText(resources.getString(R.string.calmdown_time) + ": " + timerSequence.getCalmDown());
 //        holder.setBackgroundColor(timerSequence.getColor());
         holder.cardView.setCardBackgroundColor(timerSequence.getColor());
+    }
+
+    public void setTimer(ArrayList<TimerData> timer) {
+        this.timerData = timer;
+        this.notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
         return timerData.size();
+    }
+
+    interface OnTimerEditListener {
+        void onTimerEditClick(int position);
     }
 
     interface OnItemDeleteListener {
