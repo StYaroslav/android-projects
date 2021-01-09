@@ -77,11 +77,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-    @SuppressLint("SetTextI18n")
+    
     private void updateUI() {
-        usernameLabel.setText("You are welcome, " + Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName());
-
     }
 
 }
