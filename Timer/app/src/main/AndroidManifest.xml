@@ -3,7 +3,6 @@
     package="com.example.timer">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature android:name="android.hardware.type.watch" />
@@ -15,7 +14,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActiveTimerActivity"></activity>
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ActiveTimerActivity" />
 
         <service
             android:name=".services.TimerService"
@@ -27,32 +35,22 @@
             android:enabled="true"
             android:exported="false">
             <intent-filter>
-                <action android:name="broadcast"/>
+                <action android:name="broadcast" />
             </intent-filter>
-
         </receiver>
-
         <receiver
             android:name=".helpers.NotificationReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="notification" />
             </intent-filter>
-
         </receiver>
-
 
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity android:name=".TimerActivity" />
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivity"/>
     </application>
 
 </manifest>

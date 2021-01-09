@@ -11,6 +11,7 @@
     <color name="darkBlue">#2A427E</color>
     <color name="purple">#673AB7</color>
     <color name="darkPurple">#4B248F</color>
+    <color name="splash">#6A5ACD</color>
 
     <string-array name="card_view_colors">
         <item>#42218E</item>
