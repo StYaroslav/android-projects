@@ -1,4 +1,4 @@
-package com.example.timer;
+package com.example.timer.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -9,6 +9,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import com.example.timer.helpers.OnDataReset;
+import com.example.timer.R;
+import com.example.timer.SettingsActivity;
 
 public  class ResetDialogFragment extends DialogFragment {
     OnDataReset onDataReset;

@@ -1,4 +1,4 @@
-package com.example.timer;
+package com.example.timer.helpers;
 
 import android.annotation.TargetApi;
 import android.content.Context;

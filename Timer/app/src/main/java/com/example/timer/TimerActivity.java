@@ -1,11 +1,13 @@
 package com.example.timer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,11 +17,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.timer.factories.EditViewModelFactory;
+import com.example.timer.models.TimerData;
+import com.example.timer.viewModels.EditTimerViewModel;
+import com.jaredrummler.android.colorpicker.ColorPickerDialog;
+import com.jaredrummler.android.colorpicker.ColorPickerDialogListener;
+import com.jaredrummler.android.colorpicker.ColorShape;
+
 import java.util.ArrayList;
 
-public class TimerActivity extends AppCompatActivity {
+public class TimerActivity extends AppCompatActivity implements ColorPickerDialogListener {
 
-    TextView title, preparing, work, rest, cycles, sets, restBetweenSets, calmDown, colorView;
+    TextView title, preparing, work, rest, cycles, sets, restBetweenSets, calmDown;
+    CardView colorView;
     EditTimerViewModel editViewModel;
 
     @SuppressLint("SetTextI18n")
@@ -44,7 +54,7 @@ public class TimerActivity extends AppCompatActivity {
         sets = findViewById(R.id.setsValue);
         restBetweenSets = findViewById(R.id.restBetweenSetsValue);
         calmDown = findViewById(R.id.calmDownValue);
-        // colorView = findViewById(R.id.workValue);
+        colorView = findViewById(R.id.currentColor);
 
         final ArrayList<ImageButton> buttons = new ArrayList<>();
         buttons.add((ImageButton) findViewById(R.id.preparingMinus));
@@ -135,13 +145,13 @@ public class TimerActivity extends AppCompatActivity {
             }
         });
 
-        /*editViewModel.color.observe(this, new Observer<Integer>() {
+        editViewModel.color.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 colorView.setCardBackgroundColor(integer);
             }
 
-        });*/
+        });
 
         View.OnClickListener buttonsClickListener = new View.OnClickListener() {
             @Override
@@ -165,11 +175,18 @@ public class TimerActivity extends AppCompatActivity {
         };
 
         Button confirmButton = findViewById(R.id.confirmButton);
+        Button changeColorButton = findViewById(R.id.changeColorButton);
+        changeColorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createColorPickerDialog(editViewModel.id.getValue());
+            }
+        });
         confirmButton.setOnClickListener(confirmButtonListener);
     }
 
 
-   /* private void createColorPickerDialog(int id) {
+    private void createColorPickerDialog(int id) {
         ColorPickerDialog.newBuilder()
                 .setColor(Color.RED)
                 .setDialogType(ColorPickerDialog.TYPE_PRESETS)
@@ -178,22 +195,22 @@ public class TimerActivity extends AppCompatActivity {
                 .setColorShape(ColorShape.SQUARE)
                 .setDialogId(id)
                 .show(this);
-    }*/
+    }
 
     private void showToast() {
         Toast.makeText(this, getResources().getString(R.string.min_value_toast),
                 Toast.LENGTH_SHORT).show();
     }
 
-   /* @Override
+    @Override
     public void onColorSelected(int _id, int color) {
         editViewModel.color.setValue(color);
-    }*/
+    }
 
-   /* @Override
+    @Override
     public void onDialogDismissed(int dialogId) {
 
-    }*/
+    }
 
     private void changeValue(View view) {
         if (view.getId() == R.id.preparingMinus) {

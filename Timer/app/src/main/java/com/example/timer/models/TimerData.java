@@ -1,4 +1,4 @@
-package com.example.timer;
+package com.example.timer.models;
 
 import java.io.Serializable;
 

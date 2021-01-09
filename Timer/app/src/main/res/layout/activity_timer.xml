@@ -14,13 +14,15 @@
         <Button
             android:id="@+id/confirmButton"
             android:layout_width="wrap_content"
-            android:layout_height="38dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/confirm"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/calmDownValue" />
+            app:layout_constraintTop_toBottomOf="@+id/changeColorButton" />
 
         <TextView
             android:id="@+id/title"
@@ -332,5 +334,47 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/restBetweenSetsValue" />
+
+        <TextView
+            android:id="@+id/color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="84dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/current_color"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calmDownValue" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/currentColor"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="12dp"
+            android:elevation="6dp"
+            android:innerRadius="0dp"
+            android:shape="ring"
+            android:thicknessRatio="1.9"
+            app:cardBackgroundColor="@color/green"
+            app:cardCornerRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.284"
+            app:layout_constraintStart_toEndOf="@+id/color"
+            app:layout_constraintTop_toBottomOf="@+id/calmDownValue" />
+
+        <Button
+            android:id="@+id/changeColorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center_horizontal"
+            android:text="@string/change_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/currentColor" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

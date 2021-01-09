@@ -14,7 +14,11 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.ListPreference;
 import androidx.preference.PreferenceFragmentCompat;
 
-public class SettingsActivity  extends AppCompatActivity implements OnDataReset{
+import com.example.timer.fragments.ResetDialogFragment;
+import com.example.timer.helpers.LocaleHelper;
+import com.example.timer.helpers.OnDataReset;
+
+public class SettingsActivity  extends AppCompatActivity implements OnDataReset {
     private SettingsFragment settingsFragment;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;

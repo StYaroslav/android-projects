@@ -1,8 +1,11 @@
-package com.example.timer;
+package com.example.timer.factories;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.timer.models.TimerData;
+import com.example.timer.viewModels.EditTimerViewModel;
 
 public class EditViewModelFactory implements ViewModelProvider.Factory {
     TimerData timer;

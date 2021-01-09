@@ -1,4 +1,4 @@
-package com.example.timer;
+package com.example.timer.helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,10 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
-import android.widget.ArrayAdapter;
-import android.widget.TableLayout;
 
 import androidx.annotation.Nullable;
+
+import com.example.timer.models.Phase;
+import com.example.timer.models.TimerData;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,6 +20,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "timerDB";
     public static final String TABLE_TIMERS = "timers";
+    public static final String TABLE_PHASES = "phases";
 
     public static final String KEY_ID = "_id";
     public static final String KEY_TITLE = "title";
@@ -31,6 +33,10 @@ public class DbHelper extends SQLiteOpenHelper {
     public static final String KEY_CALM_DOWN = "calm_down";
     public static final String COLOR = "color";
 
+    public static final String TIMER_ID = "timer_id";
+    public static final String KEY_PHASE_NAME = "phase";
+    public static final String KEY_TIME = "time";
+
     public DbHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -42,12 +48,15 @@ public class DbHelper extends SQLiteOpenHelper {
                 + " integer," + KEY_WORK + " integer," + KEY_REST + " integer," + KEY_CYCLES
                 + " integer," + KEY_SETS + " integer," + KEY_REST_BETWEEN_SETS
                 + " integer," + KEY_CALM_DOWN + " integer," + COLOR + " integer"+ ");");
+        db.execSQL("create table " + TABLE_PHASES + " (" + KEY_ID +
+                " integer primary key autoincrement, " + TIMER_ID + " integer, " +
+                KEY_PHASE_NAME + " text, " + KEY_TIME + " integer);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("drop table if exists " + TABLE_TIMERS);
-
+        db.execSQL("drop table if exists " + TABLE_PHASES);
         onCreate(db);
     }
 
@@ -104,6 +113,52 @@ public class DbHelper extends SQLiteOpenHelper {
 
         cursor.close();
         return result;
+    }
+
+    public ArrayList<Phase> getPhasesById(int timerId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from " + TABLE_PHASES + " where "
+                + TIMER_ID + " = " + timerId + ";", null);
+
+        ArrayList<Phase> phaseList = new ArrayList<>();
+        if (cursor.getCount() > 0) {
+            if (cursor.moveToFirst()) {
+                do {
+                    Phase phase =
+                            new Phase(cursor.getInt(cursor.getColumnIndex(KEY_ID)),
+                                    cursor.getInt(cursor.getColumnIndex(KEY_TIME)),
+                                    cursor.getString(cursor.getColumnIndex(KEY_PHASE_NAME)));
+                    phaseList.add(phase);
+
+                } while (cursor.moveToNext());
+            }
+
+        }
+        cursor.close();
+        return phaseList;
+    }
+
+    public void addPhases(ArrayList<Phase> phaseList, int timerId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        for (Phase phase : phaseList) {
+            db.insert(TABLE_PHASES, null, getContentValues(phase, timerId));
+        }
+    }
+
+    public void deletePhases(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("delete from " + TABLE_PHASES + " where " +
+                TIMER_ID + " = " + id, null);
+        db.delete(TABLE_PHASES, TIMER_ID + " = " + id, null);
+        cursor.close();
+    }
+
+    private ContentValues getContentValues(Phase phase, int timerId) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TIMER_ID, timerId);
+        contentValues.put(KEY_PHASE_NAME, phase.getName());
+        contentValues.put(KEY_TIME, phase.getTime());
+        return contentValues;
     }
 
     private ContentValues getContentValues(TimerData timer){
