@@ -1,0 +1,119 @@
+apply plugin: 'com.android.application'
+
+def getPatch() {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe'
+        standardOutput = stdout
+    }
+    def result = stdout.toString()
+    if (result.contains("-")) {
+        return result.split("-")[1]
+    } else {
+        return '0'
+    }
+}
+
+def getTag() {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe'
+        standardOutput = stdout
+    }
+    def result = stdout.toString()
+    if (result.contains("-")) {
+        return result.split("-").first()
+    } else {
+        return '1.0'
+    }
+}
+
+def getCode() {
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'tag'
+        standardOutput = stdout
+    }
+    def result = stdout.toString()
+    if (result.contains("\n")) {
+        return result.split("\n").length
+    }
+    else {
+        return 1
+    }
+}
+
+def patch = getPatch()
+def tag = getTag()
+def code = getCode()
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        applicationId "com.example.converter"
+        minSdkVersion 19
+        targetSdkVersion 30
+        versionCode code
+        versionName "$tag.$patch"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable false
+        }
+    }
+
+    flavorDimensions "converter"
+    productFlavors {
+
+        free {
+            resValue "string", "app_name", "Converter"
+            dimension "converter"
+            applicationIdSuffix ".free"
+            versionNameSuffix "-free"
+        }
+
+        pro {
+            resValue "string", "app_name", "Converter Pro"
+            dimension "converter"
+            applicationIdSuffix ".pro"
+            versionNameSuffix "-pro"
+        }
+    }
+    sourceSets {
+        pro {
+            res {
+                srcDirs 'src/pro/res', 'src/pro/res/'
+            }
+
+            java {
+                srcDirs 'src/pro/java', 'src/pro/java/'
+            }
+        }
+        free {
+            res {
+                srcDirs 'src/free/res', 'src/free/res/'
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    annotationProcessor 'androidx.lifecycle:lifecycle-compiler:2.2.0'
+    implementation "com.google.android.material:material:1.2.1"
+}

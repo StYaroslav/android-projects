@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "applicationId": "com.example.converter.pro",
+  "variantType": "BASE_APK",
+  "elements": [
+    {
+      "outputType": {
+        "type": "PROCESSED_RES"
+      },
+      "apkData": {
+        "type": "MAIN",
+        "splits": [],
+        "versionCode": 2,
+        "versionName": "v1.3.7-pro",
+        "outputFile": "app-pro-debug.apk",
+        "fullName": "proDebug",
+        "baseName": "pro-debug",
+        "dirName": ""
+      },
+      "path": "resources-proDebug.ap_",
+      "properties": {
+        "packageId": "com.example.converter.pro",
+        "split": "",
+        "minSdkVersion": "19"
+      }
+    }
+  ]
+}
