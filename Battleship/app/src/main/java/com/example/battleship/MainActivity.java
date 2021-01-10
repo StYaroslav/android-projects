@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
     Button signInButton;
     Button profileButton;
-    Button findGameButton;
+    Button connectGameButton;
     Button createGameButton;
 
     TextView usernameLabel;
@@ -50,12 +50,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        findGameButton = findViewById(R.id.findGameButton);
+        connectGameButton = findViewById(R.id.findGameButton);
         createGameButton = findViewById(R.id.createGameButton);
 
         createGameButton.setOnClickListener(v -> {
             Intent intent = new Intent(getApplicationContext(), CreateGameActivity.class);
             startActivity(intent);
+        });
+
+        connectButton.setOnClickListener(v -> {
+            DialogFragment connectGameFragment = new ConnectGameFragment();
+            connectGameFragment.show(getSupportFragmentManager(), "connectGameFragment");
         });
 
         signInButton = findViewById(R.id.signInButton);
