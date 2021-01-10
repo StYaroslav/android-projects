@@ -1,4 +1,4 @@
-package com.example.battleship;
+ package com.example.battleship;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.battleship.activities.CreateGameActivity;
 import com.example.battleship.activities.UserProfileActivity;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 1;
     Button signInButton;
     Button profileButton;
+    Button findGameButton;
+    Button createGameButton;
+
     TextView usernameLabel;
     FirebaseAuth mAuth;
 
@@ -44,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
             else {
                 Toast.makeText(this, "Sign in to view your profile!", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        findGameButton = findViewById(R.id.findGameButton);
+        createGameButton = findViewById(R.id.createGameButton);
+
+        createGameButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), CreateGameActivity.class);
+            startActivity(intent);
         });
 
         signInButton = findViewById(R.id.signInButton);

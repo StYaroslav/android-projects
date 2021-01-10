@@ -37,7 +37,7 @@ import java.util.UUID;
 
 public class UserProfileActivity extends AppCompatActivity {
 
-    int PICK_IMAGE_ACTION = 1;
+    int PICK_IMAGE = 1;
 
     SimpleDraweeView profileImageView;
 
@@ -88,7 +88,7 @@ public class UserProfileActivity extends AppCompatActivity {
         imageUploadButton.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
             intent.setType("image/*");
-            startActivityForResult(intent, PICK_IMAGE_ACTION);
+            startActivityForResult(intent, PICK_IMAGE);
         });
 
         gravatarSwitch.setOnCheckedChangeListener((buttonView, isGravatarUsed) -> {
@@ -150,9 +150,8 @@ public class UserProfileActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PICK_IMAGE_ACTION && resultCode == RESULT_OK && data != null){
+        if(requestCode == PICK_IMAGE && resultCode == RESULT_OK && data != null){
             selectedPhotoUri = data.getData();
-
             profileImageView.setImageURI(selectedPhotoUri);
         }
     }

@@ -3,13 +3,15 @@
     package="com.example.battleship">
 
     <application
+        android:name=".BattleshipApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Battleship"
-        android:name=".BattleshipApp">
+        android:theme="@style/Theme.Battleship">
+        <activity android:name=".activities.ConnectGameActivity"></activity>
+        <activity android:name=".activities.CreateGameActivity" />
         <activity android:name=".activities.UserProfileActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
