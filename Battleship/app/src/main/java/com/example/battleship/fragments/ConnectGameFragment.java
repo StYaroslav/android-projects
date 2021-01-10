@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.battleship.R;
 import com.example.battleship.activities.ConnectGameActivity;
+import com.example.battleship.activities.CreateGameActivity;
 import com.example.battleship.models.GameData;
 import com.example.battleship.models.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,6 +30,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class ConnectGameFragment extends DialogFragment {
     TextView idInput;
@@ -89,10 +92,12 @@ public class ConnectGameFragment extends DialogFragment {
 
     private void EstablishGameConnection(GameData game){
         if (game.getHostUser() != null) {
-            game.setConnectedUser(new User(currentUser.getUid(), currentUser.getDisplayName(), currentUser.getPhotoUrl().toString()));
+            Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().remove(this).commit();
+            game.setConnectedUser(new User(currentUser.getUid(), currentUser.getDisplayName(),
+                    "https://www.vippng.com/png/detail/355-3554387_create-digital-profile-icon-blue-profile-icon-png.png"));
             gamesDatabaseReference.setValue(game);
             Intent intent = new Intent(getContext(), ConnectGameActivity.class);
-            intent.putExtra("game", (Parcelable) game);
+            intent.putExtra("game", game);
             startActivity(intent);
         }
     }

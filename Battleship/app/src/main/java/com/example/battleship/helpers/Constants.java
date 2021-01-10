@@ -18,4 +18,5 @@ public class Constants {
     public static final String WAITING_STATE = "waiting";
     public static final String ACTIVE_STATE = "active";
     public static final String GAME_EXTRA = "game";
+    public static final String FINISHED_STATE = "finished";
 }

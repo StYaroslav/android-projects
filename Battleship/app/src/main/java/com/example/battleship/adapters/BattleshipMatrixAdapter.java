@@ -13,16 +13,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.battleship.R;
 import com.example.battleship.helpers.Constants;
 import com.example.battleship.models.BattleshipMatrix;
+import com.example.battleship.models.BattleshipMatrixCell;
 
 public class BattleshipMatrixAdapter extends RecyclerView.Adapter<BattleshipMatrixAdapter.ViewHolder> {
-    BattleshipMatrix matrix;
+    BattleshipMatrixCell[][] matrix;
     Context context;
     OnCellClickListener mOnCellClickListener;
     boolean isOpponentMatrix;
     boolean clickAllowed;
 
-    public void UpdateMatrix(BattleshipMatrix matrix){
+    public void UpdateMatrix(BattleshipMatrixCell[][] matrix){
         this.matrix = matrix;
+        notifyDataSetChanged();
+    }
+
+    public void ShowShipsAfterDefeat(){
+        this.isOpponentMatrix = false;
         notifyDataSetChanged();
     }
 
@@ -31,7 +37,7 @@ public class BattleshipMatrixAdapter extends RecyclerView.Adapter<BattleshipMatr
         notifyDataSetChanged();
     }
 
-    public BattleshipMatrixAdapter (Context context, BattleshipMatrix matrix, boolean isOpponentMatrix,
+    public BattleshipMatrixAdapter (Context context, BattleshipMatrixCell[][] matrix, boolean isOpponentMatrix,
                          OnCellClickListener onCellClickListener, boolean clickAllowed){
         this.isOpponentMatrix = isOpponentMatrix;
         this.matrix = matrix;
@@ -59,12 +65,12 @@ public class BattleshipMatrixAdapter extends RecyclerView.Adapter<BattleshipMatr
 
         holder.cellImageView.setImageResource(R.drawable.square);
         View.OnClickListener onCellClicked = v -> {
-            if (matrix.matrix[row][column].type == Constants.SHIP_CELL) {
+            if (matrix[row][column].getType() == Constants.SHIP_CELL) {
                 holder.cellImageView.setImageResource(R.drawable.hit_marker);
                 mOnCellClickListener.onCellClicked(row, column, Constants.RESULT_HIT);
-                matrix.matrix[row][column].type = Constants.HIT_CELL;
-            } else if (matrix.matrix[row][column].type == Constants.NEARBY_CELL ||
-                    matrix.matrix[row][column].type == Constants.EMPTY_CELL) {
+                matrix[row][column].setType(Constants.HIT_CELL);
+            } else if (matrix[row][column].getType() == Constants.NEARBY_CELL ||
+                    matrix[row][column].getType() == Constants.EMPTY_CELL) {
                 holder.cellImageView.setImageResource(R.drawable.miss_marker);
                 mOnCellClickListener.onCellClicked(row, column, Constants.RESULT_MISS);
             }
@@ -72,7 +78,7 @@ public class BattleshipMatrixAdapter extends RecyclerView.Adapter<BattleshipMatr
         };
 
         if (!isOpponentMatrix) {
-            if (matrix.matrix[row][column].type == Constants.SHIP_CELL)
+            if (matrix[row][column].getType() == Constants.SHIP_CELL)
                 holder.cellImageView.setBackgroundColor(R.color.black);
         }
         else {
@@ -80,9 +86,9 @@ public class BattleshipMatrixAdapter extends RecyclerView.Adapter<BattleshipMatr
                 holder.cellImageView.setOnClickListener(onCellClicked);
         }
 
-        if (matrix.matrix[row][column].type == Constants.HIT_CELL) {
+        if (matrix[row][column].getType() == Constants.HIT_CELL) {
             holder.cellImageView.setImageResource(R.drawable.hit_marker);
-        } else if (matrix.matrix[row][column].type == Constants.CHECKED_CELL) {
+        } else if (matrix[row][column].getType() == Constants.CHECKED_CELL) {
             holder.cellImageView.setImageResource(R.drawable.miss_marker);
         }
     }
@@ -104,6 +110,3 @@ public class BattleshipMatrixAdapter extends RecyclerView.Adapter<BattleshipMatr
     }
 }
 
-interface OnCellClickListener{
-    void onCellClicked(int row, int column, int result);
-}

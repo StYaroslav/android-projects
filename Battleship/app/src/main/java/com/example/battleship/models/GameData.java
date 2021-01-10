@@ -2,7 +2,9 @@ package com.example.battleship.models;
 
 import com.example.battleship.helpers.Constants;
 
-public class GameData {
+import java.io.Serializable;
+
+public class GameData implements Serializable {
     private User hostUser;
     private User connectedUser;
     private BattleshipMatrix playerMatrix;

@@ -41,7 +41,7 @@ public class FieldFragment extends Fragment {
 
         mOnFieldChangedListener.OnFieldChanged(matrix);
         BattleshipMatrixAdapter adapter = new BattleshipMatrixAdapter(getContext(),
-                matrix,false, null, false);
+                matrix.matrix,false, null, false);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),10));
         return view;

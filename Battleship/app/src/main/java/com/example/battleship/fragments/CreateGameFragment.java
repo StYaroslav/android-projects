@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
+
 
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -26,6 +26,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class CreateGameFragment extends DialogFragment {
     TextView gameIdTextView;
@@ -47,10 +49,10 @@ public class CreateGameFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_create_dialog, container, false);
+        View view = inflater.inflate(R.layout.fragment_create_game, container, false);
         String hostUid = FirebaseAuth.getInstance().getUid();
         gameIdTextView = view.findViewById(R.id.gameIdTextView);
-        gameId = String.valueOf((int)((Math.random() * ((Constants.MAX_ID - Constants.MIN_ID) + 1)) + Constants.MIN_ID));
+        gameId = String.valueOf((int) ((Math.random() * ((Constants.MAX_ID - Constants.MIN_ID) + 1)) + Constants.MIN_ID));
 
         usersDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(hostUid);
         gameDatabaseReference = FirebaseDatabase.getInstance().getReference("/games/" + gameId);
@@ -66,6 +68,7 @@ public class CreateGameFragment extends DialogFragment {
                 gameDatabaseReference.setValue(game);
                 WaitGuestConnection();
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -74,17 +77,13 @@ public class CreateGameFragment extends DialogFragment {
         return view;
     }
 
-    private void WaitGuestConnection(){
+    private void WaitGuestConnection() {
         gameEventListener = gameDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 GameData game = snapshot.getValue(GameData.class);
-                if (game.getConnectedUser() != null) {
-                    Intent intent = new Intent(getContext(), ConnectGameActivity.class);
-                    intent.putExtra("game", (Parcelable) game);
-                    startActivity(intent);
-                    gameDatabaseReference.removeEventListener(gameEventListener);
-                }
+                if (game.getConnectedUser() != null)
+                    StartGame(game);
             }
 
             @Override
@@ -94,10 +93,18 @@ public class CreateGameFragment extends DialogFragment {
         });
     }
 
+    private void StartGame(GameData game) {
+        Objects.requireNonNull(getActivity()).getSupportFragmentManager().beginTransaction().remove(this).commit();
+        if(gameEventListener != null)
+            gameDatabaseReference.removeEventListener(gameEventListener);
+        Intent intent = new Intent(getContext(), ConnectGameActivity.class);
+        intent.putExtra("game", game);
+        startActivity(intent);
+    }
+
     @Override
     public void onDismiss(@NonNull DialogInterface dialog) {
         super.onDismiss(dialog);
-        DeleteGame();
     }
 
     @Override
@@ -106,8 +113,9 @@ public class CreateGameFragment extends DialogFragment {
         DeleteGame();
     }
 
-    private void DeleteGame(){
-        gameDatabaseReference.removeEventListener(gameEventListener);
+    private void DeleteGame() {
+        if (gameEventListener != null)
+            gameDatabaseReference.removeEventListener(gameEventListener);
         gameDatabaseReference.removeValue();
     }
 }

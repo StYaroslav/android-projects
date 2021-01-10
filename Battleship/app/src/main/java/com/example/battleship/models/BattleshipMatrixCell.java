@@ -2,17 +2,58 @@ package com.example.battleship.models;
 
 import com.example.battleship.helpers.Constants;
 
-public class BattleshipMatrixCell {
-    int rotation;
-    public int type;
-    public boolean isHead;
+import java.io.Serializable;
 
-    public BattleshipMatrixCell() {
+public class BattleshipMatrixCell  implements Serializable {
+    private int rotation;
+    private int type;
+
+    private int xCoordinate;
+    private int yCoordinate;
+
+    private boolean isHead;
+
+    public BattleshipMatrixCell(){
         this.type = Constants.EMPTY_CELL;
     }
 
-    public BattleshipMatrixCell(boolean isHead, int type) {
+    public int getXCoordinate() {
+        return xCoordinate;
+    }
+
+    public void setXCoordinate(int xCoordinate) {
+        this.xCoordinate = xCoordinate;
+    }
+
+    public int getYCoordinate() {
+        return yCoordinate;
+    }
+
+    public void setYCoordinate(int yCoordinate) {
+        this.yCoordinate = yCoordinate;
+    }
+
+    public int getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(int rotation) {
+        this.rotation = rotation;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
         this.type = type;
-        this.isHead = isHead;
+    }
+
+    public boolean isHead() {
+        return isHead;
+    }
+
+    public void setHead(boolean head) {
+        isHead = head;
     }
 }

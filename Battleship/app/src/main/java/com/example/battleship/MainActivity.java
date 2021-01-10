@@ -1,16 +1,19 @@
  package com.example.battleship;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.battleship.activities.CreateGameActivity;
 import com.example.battleship.activities.UserProfileActivity;
+import com.example.battleship.fragments.ConnectGameFragment;
+import com.example.battleship.fragments.CreateGameFragment;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class MainActivity extends AppCompatActivity {
+ public class MainActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 1;
     Button signInButton;
@@ -31,9 +34,11 @@ public class MainActivity extends AppCompatActivity {
     TextView usernameLabel;
     FirebaseAuth mAuth;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_main);
 
         usernameLabel = findViewById(R.id.usernameLabel);
@@ -54,11 +59,11 @@ public class MainActivity extends AppCompatActivity {
         createGameButton = findViewById(R.id.createGameButton);
 
         createGameButton.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), CreateGameActivity.class);
-            startActivity(intent);
+            DialogFragment createGameFragment = new CreateGameFragment();
+            createGameFragment.show(getSupportFragmentManager(), "createGameFragment");
         });
 
-        connectButton.setOnClickListener(v -> {
+        connectGameButton.setOnClickListener(v -> {
             DialogFragment connectGameFragment = new ConnectGameFragment();
             connectGameFragment.show(getSupportFragmentManager(), "connectGameFragment");
         });
