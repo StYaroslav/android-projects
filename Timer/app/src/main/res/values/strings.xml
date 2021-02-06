@@ -12,12 +12,13 @@
     <string name="minus" translatable="false">-</string>
     <string name="plus" translatable="false">+</string>
     <string name="confirm">Confirm</string>
-    <string name="cooldown_time">Cooldown time</string>
+    <string name="calmdown_time">Cooldown time</string>
     <string name="rest_between_sets">Rest between cycles</string>
     <string name="sets_amount">Sets amount</string>
     <string name="cycles_amount">Cycles amount</string>
     <string name="rest_time">Rest time</string>
     <string name="working_time">Working time</string>
+    <string name="choose_color">Choose color</string>
     <string name="change_color">Change color</string>
     <string name="current_color">Current color:</string>
     <!-- TODO: Remove or change this placeholder text -->
@@ -49,7 +50,7 @@
     <string name="preparing">Preparing</string>
     <string name="work">Work</string>
     <string name="rest">Rest</string>
-    <string name="cooldown">Cooldown</string>
+    <string name="calmdown">Cooldown</string>
     <string name="finish">Finish</string>
     <string name="training_end">Training has finished</string>
     <string name="reset_data">Reset data</string>

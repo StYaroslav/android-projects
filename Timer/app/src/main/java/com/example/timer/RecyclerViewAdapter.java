@@ -2,6 +2,7 @@ package com.example.timer;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -25,13 +26,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     ArrayList<TimerData> timerData;
     Context context;
     String[] cardViewColors;
-    private final OnItemDeleteListener mOnDeleteListener;
+    OnItemDeleteListener mOnDeleteListener;
+    OnItemEditListener mOnEditListener;
 
     public RecyclerViewAdapter(Context ct, ArrayList<TimerData> data,
-                               OnItemDeleteListener mOnDeleteListener) {
+                               OnItemDeleteListener mOnDeleteListener, OnItemEditListener mOnEditListener) {
         this.context = ct;
         this.timerData = data;
         this.mOnDeleteListener = mOnDeleteListener;
+        this.mOnEditListener = mOnEditListener;
         this.cardViewColors = context.getResources().getStringArray(R.array.card_view_colors);
     }
 
@@ -45,14 +48,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 calmDownValue, betweenSetsValue;
 
         OnItemDeleteListener onItemDeleteListener;
+        OnItemEditListener onItemEditListener;
 
-        public ViewHolder(@NonNull final View itemView, OnItemDeleteListener mOnDeleteListener) {
+        public ViewHolder(@NonNull final View itemView, OnItemDeleteListener mOnDeleteListener,
+                          OnItemEditListener mOnEditListener) {
             super(itemView);
 
             playButton = itemView.findViewById(R.id.playButton);
             optionsButton = itemView.findViewById(R.id.optionsButton);
 
             onItemDeleteListener = mOnDeleteListener;
+            onItemEditListener = mOnEditListener;
 
             optionsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,8 +78,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                     notifyItemRangeChanged(position, getItemCount());
                                     return true;
                                 case R.id.editItem:
-                                    Toast toast1 = Toast.makeText(context, "Edit", Toast.LENGTH_SHORT);
-                                    toast1.show();
+                                    onItemEditListener.onItemEdit(getAdapterPosition());
+//                                    Intent intent = new Intent()
+//                                    toast1.show();
                                     return true;
                                 default:
                                     return false;
@@ -104,7 +111,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.recycle_view_row, parent, false);
-        return new ViewHolder(view, mOnDeleteListener);
+        return new ViewHolder(view, mOnDeleteListener, mOnEditListener);
     }
 
     @SuppressLint("SetTextI18n")
@@ -119,8 +126,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.cyclesValue.setText(resources.getString(R.string.cycles_amount) + ": " + timerSequence.getCyclesAmount());
         holder.setsValue.setText(resources.getString(R.string.sets_amount) + ": " + timerSequence.getSetsAmount());
         holder.betweenSetsValue.setText(resources.getString(R.string.rest_between_sets) + ": " + timerSequence.getBetweenSetsRest());
-        holder.calmDownValue.setText(resources.getString(R.string.cooldown_time) + ": " + timerSequence.getCalmDown());
-//        holder.setBackgroundColor(timerSequence.getColor());
+        holder.calmDownValue.setText(resources.getString(R.string.calmdown_time) + ": " + timerSequence.getCalmDown());
         holder.cardView.setCardBackgroundColor(timerSequence.getColor());
     }
 
@@ -131,5 +137,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     interface OnItemDeleteListener {
         void onItemDelete(int position);
+    }
+
+    interface OnItemEditListener {
+        void onItemEdit(int position);
     }
 }

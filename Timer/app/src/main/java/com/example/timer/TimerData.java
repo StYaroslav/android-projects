@@ -54,9 +54,11 @@ public class TimerData implements Serializable {
     public void setPreparationTime(int _preparationTime) {
         preparationTime = Math.max(_preparationTime, 0);
     }
+
     public void setColor(int color) {
         this.color = color;
     }
+
     public void setWorkingTime(int _workingTime) {
         workingTime = Math.max(_workingTime, 0);
     }

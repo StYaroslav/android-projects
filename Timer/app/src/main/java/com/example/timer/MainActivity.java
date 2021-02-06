@@ -1,5 +1,6 @@
 package com.example.timer;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,9 +14,13 @@ import android.widget.Button;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity implements
-        RecyclerViewAdapter.OnItemDeleteListener {
+        RecyclerViewAdapter.OnItemDeleteListener, RecyclerViewAdapter.OnItemEditListener {
+
+    final int REQUEST_CODE_TIMER_ADD = 1;
+    final int REQUEST_CODE_TIMER_EDIT = 2;
 
     RecyclerView timersRecyclerView;
 
@@ -41,7 +46,8 @@ public class MainActivity extends AppCompatActivity implements
 
         timersRecyclerView = findViewById(R.id.timersList);
 
-        RecyclerViewAdapter viewAdapter = new RecyclerViewAdapter(this, timers, this);
+        RecyclerViewAdapter viewAdapter = new RecyclerViewAdapter(this, timers,
+                this, this);
 
         timersRecyclerView.setAdapter(viewAdapter);
         timersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -51,9 +57,29 @@ public class MainActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), TimerActivity.class);
-                startActivity(intent);
+                intent.putExtra("timer", new TimerData());
+                intent.putExtra("type", "add");
+                startActivityForResult(intent, REQUEST_CODE_TIMER_ADD);
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == 1) {
+            timers.add((TimerData) data.getSerializableExtra("timer"));
+            timersRecyclerView.getAdapter().notifyDataSetChanged();
+        } else {
+            TimerData timer = (TimerData) data.getSerializableExtra("timer");
+            for (int i = 0; i < timers.size(); i++) {
+                if (timers.get(i).getId() == timer.getId()) {
+                    timers.set(i, timer);
+                    timersRecyclerView.getAdapter().notifyDataSetChanged();
+                    break;
+                }
+            }
+        }
     }
 
     @Override
@@ -61,5 +87,13 @@ public class MainActivity extends AppCompatActivity implements
         dbHelper.deleteTimer(String.valueOf(timers.get(position).getId()));
         timers.remove(position);
         timersRecyclerView.getRecycledViewPool().clear();
+    }
+
+    @Override
+    public void onItemEdit(int position) {
+        Intent intent = new Intent(this, TimerActivity.class);
+        intent.putExtra("type", "edit");
+        intent.putExtra("timer", timers.get(position));
+        startActivityForResult(intent, REQUEST_CODE_TIMER_EDIT);
     }
 }
