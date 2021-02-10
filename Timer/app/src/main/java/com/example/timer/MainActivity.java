@@ -17,7 +17,9 @@ import java.util.ArrayList;
 import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity implements
-        RecyclerViewAdapter.OnItemDeleteListener, RecyclerViewAdapter.OnItemEditListener {
+        RecyclerViewAdapter.OnItemDeleteListener,
+        RecyclerViewAdapter.OnItemEditListener,
+        RecyclerViewAdapter.OnItemPlayListener {
 
     final int REQUEST_CODE_TIMER_ADD = 1;
     final int REQUEST_CODE_TIMER_EDIT = 2;
@@ -38,16 +40,12 @@ public class MainActivity extends AppCompatActivity implements
         dbHelper = new DbHelper(this);
         db = dbHelper.getWritableDatabase();
 
-        //TimerData timer = new TimerData(1, "Анжумания", 1, 1, 1, 1, 1, 1, 1, 0);
-
-        //dbHelper.addTimer(timer);
-
         timers = dbHelper.getAllTimers();
 
         timersRecyclerView = findViewById(R.id.timersList);
 
         RecyclerViewAdapter viewAdapter = new RecyclerViewAdapter(this, timers,
-                this, this);
+                this, this, this);
 
         timersRecyclerView.setAdapter(viewAdapter);
         timersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -95,5 +93,12 @@ public class MainActivity extends AppCompatActivity implements
         intent.putExtra("type", "edit");
         intent.putExtra("timer", timers.get(position));
         startActivityForResult(intent, REQUEST_CODE_TIMER_EDIT);
+    }
+
+    @Override
+    public void onItemPlay(int position) {
+        Intent intent = new Intent(this, RunningTimerActivity.class);
+        intent.putExtra("timer", timers.get(position));
+        startActivity(intent);
     }
 }

@@ -9,4 +9,11 @@
         <item>#FF2E63</item>
         <item>#fd5f00</item>
     </string-array>
+
+    <string-array name="timer_bg_colors">
+        <item>#AC1B1B</item>
+        <item>#18BD18</item>
+        <item>#1B3AD3</item>
+        <item>#7114B5</item>
+    </string-array>
 </resources>

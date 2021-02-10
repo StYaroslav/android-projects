@@ -28,13 +28,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     String[] cardViewColors;
     OnItemDeleteListener mOnDeleteListener;
     OnItemEditListener mOnEditListener;
+    OnItemPlayListener mOnItemPlay;
 
     public RecyclerViewAdapter(Context ct, ArrayList<TimerData> data,
-                               OnItemDeleteListener mOnDeleteListener, OnItemEditListener mOnEditListener) {
+                               OnItemDeleteListener mOnDeleteListener,
+                               OnItemEditListener mOnEditListener,
+                               OnItemPlayListener mOnItemPlay) {
         this.context = ct;
         this.timerData = data;
         this.mOnDeleteListener = mOnDeleteListener;
         this.mOnEditListener = mOnEditListener;
+        this.mOnItemPlay = mOnItemPlay;
         this.cardViewColors = context.getResources().getStringArray(R.array.card_view_colors);
     }
 
@@ -49,9 +53,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         OnItemDeleteListener onItemDeleteListener;
         OnItemEditListener onItemEditListener;
+        OnItemPlayListener onItemPlayListener;
 
         public ViewHolder(@NonNull final View itemView, OnItemDeleteListener mOnDeleteListener,
-                          OnItemEditListener mOnEditListener) {
+                          OnItemEditListener mOnEditListener, OnItemPlayListener mOnItemPlayListener) {
             super(itemView);
 
             playButton = itemView.findViewById(R.id.playButton);
@@ -59,6 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             onItemDeleteListener = mOnDeleteListener;
             onItemEditListener = mOnEditListener;
+            onItemPlayListener = mOnItemPlayListener;
 
             optionsButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -79,8 +85,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                     return true;
                                 case R.id.editItem:
                                     onItemEditListener.onItemEdit(getAdapterPosition());
-//                                    Intent intent = new Intent()
-//                                    toast1.show();
                                     return true;
                                 default:
                                     return false;
@@ -88,6 +92,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         }
                     });
                     popupMenu.show();
+                }
+            });
+
+            playButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    onItemPlayListener.onItemPlay(position);
                 }
             });
 
@@ -111,7 +123,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.recycle_view_row, parent, false);
-        return new ViewHolder(view, mOnDeleteListener, mOnEditListener);
+        return new ViewHolder(view, mOnDeleteListener, mOnEditListener, mOnItemPlay);
     }
 
     @SuppressLint("SetTextI18n")
@@ -133,6 +145,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public int getItemCount() {
         return timerData.size();
+    }
+
+    interface OnItemPlayListener {
+        void onItemPlay(int position);
     }
 
     interface OnItemDeleteListener {
