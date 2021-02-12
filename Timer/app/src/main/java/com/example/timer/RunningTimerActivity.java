@@ -1,15 +1,20 @@
 package com.example.timer;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.IBinder;
+import android.os.PersistableBundle;
 import android.util.Pair;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -35,6 +40,7 @@ public class RunningTimerActivity extends AppCompatActivity {
     int phaseNumber = 0;
     ImageButton pauseButton, nextButton, backButton;
     Intent serviceIntent;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,7 @@ public class RunningTimerActivity extends AppCompatActivity {
         tasksList = findViewById(R.id.tasksList);
         tasksAdapter = new TasksAdapter(this, phases);
         tasksList.setAdapter(tasksAdapter);
+        mp = MediaPlayer.create(this, R.raw.whistle);
 
         pauseButton = findViewById(R.id.pauseButton);
         nextButton = findViewById(R.id.nextButton);
@@ -119,6 +126,12 @@ public class RunningTimerActivity extends AppCompatActivity {
             Pair<String, Integer> currentPhaseSeconds = (Pair<String, Integer>) tasksList.getAdapter().getItem(phaseNumber);
             currentSeconds = currentPhaseSeconds.second * 1000 + 1000;
             if (isRunning) {
+                new android.os.Handler().postDelayed(
+                        new Runnable() {
+                            public void run() {
+                            }
+                        },
+                        1200);
                 startTimer();
             } else {
                 countDownText.setText(String.valueOf((int) (currentSeconds - 1)));
@@ -129,7 +142,7 @@ public class RunningTimerActivity extends AppCompatActivity {
     }
 
     public void startTimer() {
-        countDownTimer = new CountDownTimer(currentSeconds, 1000) {
+        countDownTimer = new CountDownTimer(currentSeconds, 1200) {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onTick(long millisUntilFinished) {
@@ -139,12 +152,13 @@ public class RunningTimerActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                mp.start();
                 new android.os.Handler().postDelayed(
                         new Runnable() {
                             public void run() {
                             }
                         },
-                        1000);
+                        1200);
                 phaseNumber++;
                 nextStage();
             }
@@ -189,5 +203,30 @@ public class RunningTimerActivity extends AppCompatActivity {
             stopService(serviceIntent);
             isBounded = false;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        countDownTimer.cancel();
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle(R.string.quit_title)
+                .setMessage(R.string.quit_message)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        dialog.dismiss();
+                    }
+
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startTimer();
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 }

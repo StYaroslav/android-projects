@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -26,7 +28,8 @@ import java.util.ArrayList;
 
 public class TimerActivity extends AppCompatActivity implements ColorPickerDialogListener {
 
-    TextView title, preparing, work, rest, cycles, sets, restBetweenSets, calmDown;
+    TextView title, preparing, work, rest, cycles, sets, restBetweenSets, calmDown, titleText,
+            preparingText, workText, restText, cyclesText, setsText, restBetweenSetsText, calmDownText;
     CardView currentColor;
     Button color, addTimer;
     TimerViewModel timerViewModel;
@@ -51,6 +54,14 @@ public class TimerActivity extends AppCompatActivity implements ColorPickerDialo
         color = findViewById(R.id.changeColor);
         currentColor = findViewById(R.id.currentColor);
 
+        titleText = findViewById(R.id.title);
+        preparingText = findViewById(R.id.preparing);
+        workText = findViewById(R.id.work);
+        restText = findViewById(R.id.rest);
+        cyclesText = findViewById(R.id.cycles);
+        setsText = findViewById(R.id.sets);
+        restBetweenSetsText = findViewById(R.id.restBetweenSets);
+        calmDownText = findViewById(R.id.calmDown);
 
         if (type.equals("edit")) {
             title.setText(timerViewModel.title.getValue());
@@ -64,6 +75,12 @@ public class TimerActivity extends AppCompatActivity implements ColorPickerDialo
             currentColor.setCardBackgroundColor(timerViewModel.color.getValue());
         }
 
+        SharedPreferences editor = PreferenceManager.getDefaultSharedPreferences(this);
+
+        try {
+            int fontSize = editor.getInt("font", 0);
+            setFontSize(fontSize);
+        } catch (Exception ignored) { }
 
         addTimer = findViewById(R.id.confirmButton);
         addTimer.setOnClickListener(new View.OnClickListener() {
@@ -269,5 +286,24 @@ public class TimerActivity extends AppCompatActivity implements ColorPickerDialo
                 timerViewModel.calmDown.setValue(timerViewModel.calmDown.getValue() + 1);
                 break;
         }
+    }
+
+    public void setFontSize(int fontSize) {
+        title.setTextSize(14 + fontSize);
+        preparing.setTextSize(14 + fontSize);
+        work.setTextSize(14 + fontSize);
+        rest.setTextSize(14 + fontSize);
+        cycles.setTextSize(14 + fontSize);
+        sets.setTextSize(14 + fontSize);
+        restBetweenSets.setTextSize(14 + fontSize);
+        calmDown.setTextSize(14 + fontSize);
+        titleText.setTextSize(14 + fontSize);
+        preparingText.setTextSize(14 + fontSize);
+        workText.setTextSize(14 + fontSize);
+        restText.setTextSize(14 + fontSize);
+        cyclesText.setTextSize(14 + fontSize);
+        setsText.setTextSize(14 + fontSize);
+        restBetweenSetsText.setTextSize(14 + fontSize);
+        calmDownText.setTextSize(14 + fontSize);
     }
 }

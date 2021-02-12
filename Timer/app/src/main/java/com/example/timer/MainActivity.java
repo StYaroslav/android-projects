@@ -1,13 +1,22 @@
 package com.example.timer;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -27,20 +36,26 @@ public class MainActivity extends AppCompatActivity implements
     RecyclerView timersRecyclerView;
 
     FloatingActionButton addButton;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
     DbHelper dbHelper;
-    SQLiteDatabase db;
     ArrayList<TimerData> timers;
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         dbHelper = new DbHelper(this);
-        db = dbHelper.getWritableDatabase();
 
         timers = dbHelper.getAllTimers();
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        editor = sharedPreferences.edit();
+
+        setPreferences();
 
         timersRecyclerView = findViewById(R.id.timersList);
 
@@ -68,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements
         if (resultCode == RESULT_OK && requestCode == 1) {
             timers.add((TimerData) data.getSerializableExtra("timer"));
             timersRecyclerView.getAdapter().notifyDataSetChanged();
-        } else {
+        } else if (resultCode == RESULT_OK && requestCode == 2){
             TimerData timer = (TimerData) data.getSerializableExtra("timer");
             for (int i = 0; i < timers.size(); i++) {
                 if (timers.get(i).getId() == timer.getId()) {
@@ -78,6 +93,18 @@ public class MainActivity extends AppCompatActivity implements
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.settings, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        startActivity(new Intent(this, SettingsActivity.class));
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -100,5 +127,15 @@ public class MainActivity extends AppCompatActivity implements
         Intent intent = new Intent(this, RunningTimerActivity.class);
         intent.putExtra("timer", timers.get(position));
         startActivity(intent);
+    }
+
+    public void setPreferences() {
+        if (sharedPreferences.getBoolean("appTheme", true)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }
+
+        if (sharedPreferences.getBoolean("appLocale", true)) {
+            LocaleHelper.setLocale(getBaseContext(),"en");
+        }
     }
 }

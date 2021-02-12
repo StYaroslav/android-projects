@@ -3,6 +3,7 @@ package com.example.timer;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -46,6 +48,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         CardView cardView;
 
+        SharedPreferences editor;
+
         ImageButton playButton, optionsButton;
 
         TextView titleValue, workValue, preparingValue, restValue, setsValue, cyclesValue,
@@ -55,10 +59,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         OnItemEditListener onItemEditListener;
         OnItemPlayListener onItemPlayListener;
 
+        @SuppressLint("CommitPrefEdits")
         public ViewHolder(@NonNull final View itemView, OnItemDeleteListener mOnDeleteListener,
                           OnItemEditListener mOnEditListener, OnItemPlayListener mOnItemPlayListener) {
             super(itemView);
-
             playButton = itemView.findViewById(R.id.playButton);
             optionsButton = itemView.findViewById(R.id.optionsButton);
 
@@ -115,6 +119,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             cyclesValue = itemView.findViewById(R.id.cyclesValue);
             calmDownValue = itemView.findViewById(R.id.calmDownValue);
             betweenSetsValue = itemView.findViewById(R.id.betweenSetsMinus);
+
+            editor = PreferenceManager.getDefaultSharedPreferences(context);
+
+            try {
+                int fontSize = editor.getInt("font", 0);
+                setFontSize(fontSize, this);
+            } catch (Exception ignored) { }
         }
     }
 
@@ -157,5 +168,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     interface OnItemEditListener {
         void onItemEdit(int position);
+    }
+
+    public void setFontSize(int fontSize, ViewHolder viewHolder) {
+        viewHolder.titleValue.setTextSize(14 + fontSize);
+        viewHolder.workValue.setTextSize(14 + fontSize);
+        viewHolder.preparingValue.setTextSize(14 + fontSize);
+        viewHolder.restValue.setTextSize(14 + fontSize);
+        viewHolder.setsValue.setTextSize(14 + fontSize);
+        viewHolder.cyclesValue.setTextSize(14 + fontSize);
+        viewHolder.calmDownValue.setTextSize(14 + fontSize);
+        viewHolder.betweenSetsValue.setTextSize(14 + fontSize);
     }
 }

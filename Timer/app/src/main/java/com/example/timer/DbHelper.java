@@ -70,6 +70,11 @@ public class DbHelper extends SQLiteOpenHelper {
                 " = " + timer.getId(), null);
     }
 
+    public void clearAll() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        this.onUpgrade(db, 0, 0);
+    }
+
 
     public ArrayList<TimerData> getAllTimers() {
         Cursor cursor = getReadableDatabase().query(TABLE_TIMERS, null, null,

@@ -2,6 +2,7 @@ package com.example.timer;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import android.util.Pair;
+
+import androidx.preference.PreferenceManager;
 
 import java.util.ArrayList;
 
@@ -32,6 +35,14 @@ public class TasksAdapter extends ArrayAdapter<Pair<String, Integer>> {
         }
         ((TextView) convertView.findViewById(R.id.item))
                 .setText(phase.first + ": " + phase.second);
+
+        SharedPreferences editor = PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        try {
+            int fontSize = editor.getInt("font", 0);
+            ((TextView) convertView.findViewById(R.id.item)).setTextSize(14 + fontSize);
+        } catch (Exception ignored) { }
+
         return convertView;
     }
 }
