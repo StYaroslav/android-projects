@@ -1,0 +1,28 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/settings">
+
+        <ListPreference
+            app:defaultValue="reply"
+            app:entries="@array/fonts"
+            app:entryValues="@array/fonts"
+            app:key="fontSize"
+            app:title="@string/font_size_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:key="appTheme"
+            app:title="@string/theme" />
+
+        <SwitchPreferenceCompat
+            app:key="appLocale"
+            app:title="@string/engLocale" />
+
+        <Preference
+            app:key="clearData"
+            app:title="@string/reset_data"
+            app:summary="@string/reset_data_summary"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

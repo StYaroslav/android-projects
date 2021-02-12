@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+
+    <string-array name="card_view_colors">
+        <item>#42218E</item>
+        <item>#FF2E63</item>
+        <item>#fd5f00</item>
+    </string-array>
+
+    <string-array name="timer_bg_colors">
+        <item>#AC1B1B</item>
+        <item>#18BD18</item>
+        <item>#1B3AD3</item>
+        <item>#7114B5</item>
+    </string-array>
+</resources>
