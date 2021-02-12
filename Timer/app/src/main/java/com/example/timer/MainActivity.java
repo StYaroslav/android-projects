@@ -130,11 +130,11 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public void setPreferences() {
-        if (sharedPreferences.getBoolean("appTheme", true)) {
+        if (sharedPreferences.getBoolean("appTheme", false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
 
-        if (sharedPreferences.getBoolean("appLocale", true)) {
+        if (sharedPreferences.getBoolean("appLocale", false)) {
             LocaleHelper.setLocale(getBaseContext(),"en");
         }
     }
