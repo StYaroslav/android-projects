@@ -13,6 +13,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -37,7 +39,7 @@ public class ProfileViewModel {
         storageReference = storage.getReference();
     }
 
-    public void setProfileImage(Context context) {
+    public void uploadPhoto(Context context) {
         StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
         ref.putFile(profileImageUri.getValue()).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -51,17 +53,20 @@ public class ProfileViewModel {
                     }
                 });
             }
-        })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(context, "Failed " + e.getMessage(),
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Failed " + e.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void saveProfile(Context context) throws InterruptedException {
+        if (profileImageUri.getValue() == null) {
+            this.profileImageUri.setValue(Uri.parse(
+                    "https://pics.freeicons.io/uploads/icons/png/19339625881548233621-512.png"));
+        }
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                 .setDisplayName(this.username.getValue())
                 .setPhotoUri(this.profileImageUri.getValue())
@@ -77,6 +82,22 @@ public class ProfileViewModel {
                         }
                     }
                 });
+
+        User user = new User(this.user.getUid(), username.getValue(), profileImageUri.getValue().toString());
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users/" + user.getUid());
+        databaseReference.setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context, "Changes saved!",
+                        Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(context, "Failed " + e.getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void setGravatarImage() {

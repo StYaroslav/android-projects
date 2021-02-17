@@ -3,6 +3,7 @@ package com.example.tic_tac_toe;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mFirebaseAuth;
 
-    Button profileButton, logOut, signIn;
+    Button profileButton, logOut, signIn, createGameButton, connectToGame;
 
     List<AuthUI.IdpConfig> providers;
 
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
         profileButton = findViewById(R.id.profileButton);
         signIn = findViewById(R.id.signIn);
         logOut = findViewById(R.id.logOut);
+        createGameButton = findViewById(R.id.createGame);
+        connectToGame = findViewById(R.id.gameConnect);
+
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +83,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), ProfileActivity.class));
                 finish();
+            }
+        });
+
+        createGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment createGameFragment = new CreateGameFragment();
+                createGameFragment.show(getSupportFragmentManager(), "createGameFragment");
+            }
+        });
+
+        connectToGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment connectToGameFragment = new ConnectToGameFragment();
+                connectToGameFragment.show(getSupportFragmentManager(), "connectToGameFragment");
             }
         });
     }

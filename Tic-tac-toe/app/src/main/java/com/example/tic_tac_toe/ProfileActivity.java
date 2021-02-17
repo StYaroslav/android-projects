@@ -116,6 +116,10 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onChanged(Uri uri) {
                 profileImage.setImageURI(profileViewModel.profileImageUri.getValue());
+                if (profileViewModel.profileImageUri.getValue() == null) {
+                    profileImage.setImageURI(
+                            "https://pics.freeicons.io/uploads/icons/png/19339625881548233621-512.png");
+                }
             }
         });
 
@@ -131,7 +135,7 @@ public class ProfileActivity extends AppCompatActivity {
                 && data.getData() != null) {
             selectedImage = data.getData();
             profileViewModel.profileImageUri.setValue(selectedImage);
-            profileViewModel.setProfileImage(this);
+            profileViewModel.uploadPhoto(this);
         }
     }
 }
